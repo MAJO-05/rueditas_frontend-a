@@ -1,0 +1,39 @@
+
+body {
+    color: black;
+    background-color: #f0f8ff;
+}
+
+.btn-light-blue {
+    background-color: #AEEEEE;
+    color: black;
+    border: none;
+}
+
+.btn-light-blue:hover {
+    background-color: #9FD8D8;
+}
+
+.btn-custom {
+    background-color: #AEEEEE;
+    color: black;
+    border: none;
+}
+
+.btn-custom:hover {
+    background-color: #9FD8D8;
+}
+
+
+.container {
+    margin-top: 50px;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
+
+

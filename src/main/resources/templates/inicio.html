@@ -15,21 +15,23 @@
 
     <form th:action="@{/login/autenticar}" method="post">
 
-        <div class="mt-5 mb-4">
-            <h1>Login</h1>
-        </div>
+        <h1>Rueditas</h1>
 
-        <div class="alert alert-danger" role="alert" th:if="${loginModel.codigo != '00'}">
+        <div class="alert alert-danger" role="alert" th:if="${loginModel.codigo != '00' && loginModel.mensaje != ''}">
             <span th:text="${loginModel.mensaje}"></span>
         </div>
 
+
+
         <div class="mb-3">
-            <input type="text" id="numeroPlaca" name="numeroPlaca" placeholder="Placa"
+            <label for="numeroPlaca" class="form-label">Ingrese la placa:</label>
+            <input type="text" id="numeroPlaca" name="numeroPlaca" placeholder=""
                    class="form-control form-control-lg">
         </div>
 
         <div class="d-grid">
-            <button type="submit" class="btn btn-primary btn-lg">Ingresar</button>
+            <button type="submit" class="btn btn-light-blue btn-lg">Buscar</button>
+
         </div>
 
     </form>
