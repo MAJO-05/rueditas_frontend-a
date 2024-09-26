@@ -27,16 +27,14 @@ public class LoginController {
     }
 
     @PostMapping("/autenticar")
-    public String autenticar(@RequestParam("numeroPlaca") String numeroPlaca,
-            Model model){
-
+    public String autenticar(@RequestParam("numeroPlaca") String numeroPlaca, Model model) {
         // Validar campos de entrada
-        if (numeroPlaca == null || numeroPlaca.trim().length() == 0) {
-
-            LoginModel loginModel = new LoginModel("01", "Error: Debe completar correctamente los datos", "", "","","","");
+        if (numeroPlaca == null || numeroPlaca.trim().isEmpty() ||
+                !numeroPlaca.matches("^[A-Za-z0-9]{3}-[0-9]{3}$")) {
+            LoginModel loginModel = new LoginModel("01",
+                    "Debe ingresar una placa que sea alfanumérico y tenga 7 caracteres", "", "", "", "", "");
             model.addAttribute("loginModel", loginModel);
             return "inicio";
-
         }
 
         try {
@@ -44,26 +42,27 @@ public class LoginController {
             LoginRequestDTO loginRequestDTO = new LoginRequestDTO(numeroPlaca);
             LoginResponseDTO loginResponseDTO = restTemplate.postForObject(endpoint, loginRequestDTO, LoginResponseDTO.class);
 
-            if (loginResponseDTO.codigo().equals("00")){
-
-                LoginModel loginModel = new LoginModel("00", "", loginResponseDTO.nombreMarca(), loginResponseDTO.nombreModelo(),
-                                                                                loginResponseDTO.numeroAsientos(), loginResponseDTO.numeroPrecio(),
-                                                                                loginResponseDTO.nombreColor());
+            if (loginResponseDTO != null && loginResponseDTO.codigo().equals("00")) {
+                LoginModel loginModel = new LoginModel("00", "",
+                        loginResponseDTO.nombreMarca(),
+                        loginResponseDTO.nombreModelo(),
+                        loginResponseDTO.numeroAsientos(),
+                        loginResponseDTO.numeroPrecio(),
+                        loginResponseDTO.nombreColor());
                 model.addAttribute("loginModel", loginModel);
                 return "principal";
             } else {
-                LoginModel loginModel = new LoginModel("02", "Error:Autenticacion Fallida", "","","","", "");
+                LoginModel loginModel = new LoginModel("02", "No se encontró un vehículo para la placa ingresada", "", "", "", "", "");
                 model.addAttribute("loginModel", loginModel);
                 return "inicio";
             }
-        }catch (Exception e){
-            LoginModel loginModel = new LoginModel("99", "Error: Ocurrio un problema en la autenticación", "", "","","","");
+        } catch (Exception e) {
+            LoginModel loginModel = new LoginModel("99", "Error: Ocurrió un problema en la autenticación", "", "", "", "", "");
             model.addAttribute("loginModel", loginModel);
             System.out.println(e.getMessage());
             return "inicio";
         }
-
-
     }
+
 
 }
